@@ -78,46 +78,44 @@ def run_story():
   template_length = len(genre_choice["blanks"])
 
   while current_index < template_length:
-    for i in range(template_length):
-      expected_pos = genre_choice["blanks"][current_index]
-      print(f"current index: {current_index}")
-      print(f"current word bank: {user_words}")
-      print("Enter any word you like that matches the specified part of speech.")
-      print("Or type “QUIT” to quit.")
-      print("(Type your word, then press Enter)")
-      word_choice = input(f"{expected_pos}: ").lower()
-      invalid_word = invalid_input(word_choice)
-      print()
-      
-      # invalid word handling   
-      if invalid_word:
-        print("Invalid input. Default substituted.")
-        user_words.append(expected_pos)
-        current_index += 1
-        print()
-        continue
+    expected_pos = genre_choice["blanks"][current_index]
+    #print(f"current index: {current_index}")
+    #print(f"current word bank: {user_words}")
+    print("Enter any word you like that matches the specified part of speech.")
+    print("Or type “QUIT” to quit.")
+    print("(Type your word, then press Enter)")
+    word_choice = input(f"{expected_pos}: ").lower()
+    invalid_word = invalid_input(word_choice)
+    print()
     
-      # Quit from word input and confirmation
-      elif word_choice in ("quit"):
-        while word_choice in ("quit"):
-          #print()
-          print("Are you sure you want to Quit?")
-          print("QUITTING NOW WILL ABANDON ALL STORY PROGRESS WITHOUT SAVING.")
-          print("You will have to spend some time starting from the beginning when you return.")
-          print("Enter “BACK” to go back to the page you came from, or “QUIT” to quit and exit.")
-          quit_confirm = input("Confirmation: ").lower()
-          if quit_confirm == "quit":
-            sys.exit("See you next time!")
-          elif quit_confirm == "back":
-            print()
-            break
-          else:
-            print("Unexpected input. Try again.")
-            print()
+    # Quit from word input and confirmation
+    if word_choice == "quit":
+      while True:
+        print("Are you sure you want to Quit?")
+        print("QUITTING NOW WILL ABANDON ALL STORY PROGRESS WITHOUT SAVING.")
+        print("You will have to spend some time starting from the beginning when you return.")
+        print("Enter “BACK” to go back to the page you came from, or “QUIT” to quit and exit.")
+        quit_confirm = input("Confirmation: ").lower()
+        if quit_confirm == "quit":
+          sys.exit("See you next time!")
+        elif quit_confirm == "back":
+          print()
+          break
+        else:
+          print("Unexpected input. Try again.")
+          print()
+      continue
 
-      else:
-        user_words.append(word_choice)
-        current_index += 1
+    # invalid word handling   
+    if invalid_word:
+      print("Invalid input. Default substituted.")
+      user_words.append(expected_pos)
+      print()
+
+    else:
+      user_words.append(word_choice)
+
+    current_index += 1
 
   print("----------")
   print()
